@@ -1,21 +1,315 @@
 {
-  "microsoft": "https://account.microsoft.com/account",
-  "azure": "https://azure.microsoft.com/en-us/free/students?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "imaginecup": "https://imaginecup.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "fabric-blog": "https://blog.fabric.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "learn": "https://learn.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "learn-copilot": "https://learn.microsoft.com/copilot?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "fabric-community": "https://community.fabric.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "cloud-blog": "https://microsoft.com/microsoft-cloud/blog?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "microsoft-fabric": "https://microsoft.com/microsoft-fabric?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "startups": "https://microsoft.com/startups?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "developer": "https://developer.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "devblogs": "https://devblogs.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "dotnet": "https://dotnet.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "mvp": "https://mvp.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "events": "https://events.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "reactor": "https://reactor.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "foundershub": "https://foundershub.startups.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "techcommunity": "https://techcommunity.microsoft.com?WT.mc_id=academic&wt.mc_id=studentamb_506539",
-  "vscode": "https://code.visualstudio.com?WT.mc_id=academic&wt.mc_id=studentamb_506539"
+  "config": {
+    "contributorId": "studentamb_506539"
+  },
+  "categories": [
+    {
+      "id": "developer-cloud",
+      "name": "Developer & Cloud",
+      "description": "Build skills and projects with Microsoft developer tools, frameworks, and Azure.",
+      "resources": [
+        {
+          "id": "azure",
+          "name": "Microsoft Azure",
+          "description": "Explore Microsoft's cloud platform for apps, data, AI, and infrastructure.",
+          "url": "https://azure.microsoft.com",
+          "icon": "cloud"
+        },
+        {
+          "id": "azure-free",
+          "name": "Azure Free Account",
+          "description": "Review free Azure services and options for starting a cloud project.",
+          "url": "https://azure.microsoft.com/free",
+          "icon": "cloud"
+        },
+        {
+          "id": "azure-students",
+          "name": "Azure for Students",
+          "description": "Access the Azure offer created for eligible university students.",
+          "url": "https://azure.microsoft.com/free/students",
+          "icon": "student"
+        },
+        {
+          "id": "microsoft-developer",
+          "name": "Microsoft Developer",
+          "description": "Find developer tools, platforms, samples, and technical resources.",
+          "url": "https://developer.microsoft.com",
+          "icon": "code"
+        },
+        {
+          "id": "dotnet",
+          "name": ".NET",
+          "description": "Build web, cloud, desktop, and mobile applications with .NET.",
+          "url": "https://dotnet.microsoft.com",
+          "icon": "code"
+        },
+        {
+          "id": "learn-developer",
+          "name": "Microsoft Learn for Developers",
+          "description": "Follow developer-focused documentation, training, and learning paths.",
+          "url": "https://learn.microsoft.com/developer",
+          "icon": "learn"
+        },
+        {
+          "id": "visual-studio-code",
+          "name": "Visual Studio Code",
+          "description": "Explore the lightweight, extensible code editor and its documentation.",
+          "url": "https://code.visualstudio.com",
+          "icon": "code"
+        },
+        {
+          "id": "microsoft-cloud-blog",
+          "name": "Microsoft Cloud Blog",
+          "description": "Read perspectives and product news from across Microsoft Cloud.",
+          "url": "https://microsoft.com/microsoft-cloud/blog",
+          "icon": "article"
+        },
+        {
+          "id": "dev-blogs",
+          "name": "Microsoft Dev Blogs",
+          "description": "Keep up with engineering guidance and updates from Microsoft teams.",
+          "url": "https://devblogs.microsoft.com",
+          "icon": "article"
+        }
+      ]
+    },
+    {
+      "id": "startups-innovation",
+      "name": "Startups & Innovation",
+      "description": "Resources for founders, student innovators, and teams building new ideas.",
+      "resources": [
+        {
+          "id": "microsoft-startups",
+          "name": "Microsoft for Startups",
+          "description": "Explore technology, guidance, and programs for startup founders.",
+          "url": "https://microsoft.com/startups",
+          "icon": "rocket"
+        },
+        {
+          "id": "imagine-cup",
+          "name": "Imagine Cup",
+          "description": "Discover Microsoft's global technology competition for student teams.",
+          "url": "https://imaginecup.microsoft.com",
+          "icon": "trophy"
+        },
+        {
+          "id": "startups-ai",
+          "name": "Startups AI",
+          "description": "Find resources for building and scaling AI-powered startup solutions.",
+          "url": "https://microsoft.com/startups/ai",
+          "icon": "spark"
+        },
+        {
+          "id": "startups-blog",
+          "name": "Microsoft for Startups Blog",
+          "description": "Read founder stories, product guidance, and startup ecosystem news.",
+          "url": "https://microsoft.com/startups/blog",
+          "icon": "article"
+        },
+        {
+          "id": "learn-startups",
+          "name": "Microsoft Learn for Startups",
+          "description": "Explore practical learning resources designed for startup teams.",
+          "url": "https://learn.microsoft.com/startups",
+          "icon": "learn"
+        },
+        {
+          "id": "startup-training",
+          "name": "Startup Training",
+          "description": "Browse Microsoft Learn training topics for founders and builders.",
+          "url": "https://learn.microsoft.com/training/topics/startups",
+          "icon": "learn"
+        }
+      ]
+    },
+    {
+      "id": "ai-copilot",
+      "name": "AI & Copilot",
+      "description": "Learn how Microsoft Copilot experiences can support study, work, and creation.",
+      "resources": [
+        {
+          "id": "microsoft-copilot",
+          "name": "Microsoft Copilot",
+          "description": "Use Microsoft's AI companion for research, ideas, and everyday tasks.",
+          "url": "https://copilot.microsoft.com",
+          "icon": "spark"
+        },
+        {
+          "id": "copilot-individuals",
+          "name": "Copilot for Individuals",
+          "description": "Explore personal Copilot experiences and ways to get started.",
+          "url": "https://microsoft.com/microsoft-copilot/for-individuals",
+          "icon": "spark"
+        },
+        {
+          "id": "microsoft-365-copilot",
+          "name": "Microsoft 365 Copilot",
+          "description": "Learn about AI-powered assistance across Microsoft 365 apps.",
+          "url": "https://microsoft.com/microsoft-365-copilot",
+          "icon": "spark"
+        },
+        {
+          "id": "copilot-learning-center",
+          "name": "Copilot Learning Center",
+          "description": "Find guidance for using Copilot effectively and responsibly.",
+          "url": "https://microsoft.com/microsoft-365/copilot-learning-center",
+          "icon": "learn"
+        },
+        {
+          "id": "learn-copilot",
+          "name": "Microsoft Learn Copilot",
+          "description": "Browse Copilot documentation, learning paths, and product guidance.",
+          "url": "https://learn.microsoft.com/copilot",
+          "icon": "learn"
+        }
+      ]
+    },
+    {
+      "id": "data-fabric",
+      "name": "Data & Microsoft Fabric",
+      "description": "Explore analytics, data engineering, business intelligence, and Fabric.",
+      "resources": [
+        {
+          "id": "microsoft-fabric",
+          "name": "Microsoft Fabric",
+          "description": "Explore Microsoft's unified data and analytics platform.",
+          "url": "https://microsoft.com/microsoft-fabric",
+          "icon": "data"
+        },
+        {
+          "id": "fabric-community",
+          "name": "Fabric Community",
+          "description": "Ask questions and learn with the Microsoft Fabric community.",
+          "url": "https://community.fabric.microsoft.com",
+          "icon": "community"
+        },
+        {
+          "id": "fabric-blog",
+          "name": "Fabric Blog",
+          "description": "Read Microsoft Fabric announcements, tutorials, and product updates.",
+          "url": "https://blog.fabric.microsoft.com",
+          "icon": "article"
+        },
+        {
+          "id": "learn-fabric",
+          "name": "Microsoft Learn Fabric",
+          "description": "Study Fabric concepts through documentation and guided learning.",
+          "url": "https://learn.microsoft.com/fabric",
+          "icon": "learn"
+        }
+      ]
+    },
+    {
+      "id": "power-platform",
+      "name": "Power Platform & Low Code",
+      "description": "Create apps, automate workflows, analyze data, and build low-code solutions.",
+      "resources": [
+        {
+          "id": "power-platform",
+          "name": "Microsoft Power Platform",
+          "description": "Explore Microsoft's low-code platform for apps, data, and automation.",
+          "url": "https://microsoft.com/power-platform",
+          "icon": "blocks"
+        },
+        {
+          "id": "learn-power-bi",
+          "name": "Microsoft Learn Power BI",
+          "description": "Learn to connect, visualize, and analyze data with Power BI.",
+          "url": "https://learn.microsoft.com/power-bi",
+          "icon": "chart"
+        },
+        {
+          "id": "power-platform-community",
+          "name": "Power Platform Community",
+          "description": "Connect with makers and find answers across Power Platform products.",
+          "url": "https://community.powerplatform.com",
+          "icon": "community"
+        },
+        {
+          "id": "learn-power-apps",
+          "name": "Microsoft Learn Power Apps",
+          "description": "Build custom low-code applications with Power Apps guidance.",
+          "url": "https://learn.microsoft.com/power-apps",
+          "icon": "blocks"
+        },
+        {
+          "id": "power-bi-blog",
+          "name": "Power BI Blog",
+          "description": "Follow Power BI news, features, examples, and community stories.",
+          "url": "https://powerbi.microsoft.com/blog",
+          "icon": "article"
+        },
+        {
+          "id": "learn-power-pages",
+          "name": "Microsoft Learn Power Pages",
+          "description": "Learn to build secure, data-driven business websites.",
+          "url": "https://learn.microsoft.com/power-pages",
+          "icon": "web"
+        },
+        {
+          "id": "learn-power-platform",
+          "name": "Microsoft Learn Power Platform",
+          "description": "Browse documentation and training across the Power Platform.",
+          "url": "https://learn.microsoft.com/power-platform",
+          "icon": "learn"
+        },
+        {
+          "id": "learn-power-automate",
+          "name": "Microsoft Learn Power Automate",
+          "description": "Learn to automate repetitive tasks and business workflows.",
+          "url": "https://learn.microsoft.com/power-automate",
+          "icon": "automation"
+        }
+      ]
+    },
+    {
+      "id": "community-learning",
+      "name": "Community & Learning",
+      "description": "Discover Microsoft learning, technical events, and professional communities.",
+      "resources": [
+        {
+          "id": "microsoft-events",
+          "name": "Microsoft Events",
+          "description": "Find upcoming Microsoft virtual and in-person technology events.",
+          "url": "https://events.microsoft.com",
+          "icon": "calendar"
+        },
+        {
+          "id": "tech-community",
+          "name": "Microsoft Tech Community",
+          "description": "Join product discussions and learn from Microsoft community members.",
+          "url": "https://techcommunity.microsoft.com",
+          "icon": "community"
+        },
+        {
+          "id": "microsoft-learn",
+          "name": "Microsoft Learn",
+          "description": "Build practical skills with free Microsoft training and documentation.",
+          "url": "https://learn.microsoft.com",
+          "icon": "learn"
+        },
+        {
+          "id": "inside-track",
+          "name": "Microsoft Inside Track",
+          "description": "See how Microsoft deploys and supports technology inside the company.",
+          "url": "https://microsoft.com/insidetrack",
+          "icon": "article"
+        },
+        {
+          "id": "microsoft-reactor",
+          "name": "Microsoft Reactor",
+          "description": "Join live developer sessions, workshops, and community events.",
+          "url": "https://reactor.microsoft.com",
+          "icon": "calendar"
+        },
+        {
+          "id": "student-ambassadors",
+          "name": "Microsoft Student Ambassadors",
+          "description": "Learn about Microsoft's global community program for student leaders.",
+          "url": "https://studentambassadors.microsoft.com",
+          "icon": "student"
+        }
+      ]
+    }
+  ]
 }

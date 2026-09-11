@@ -1,77 +1,226 @@
-// ---------- SERVICES LIST (MATCHES links.json) ----------
-const services = [
-    { id: 'microsoft', name: 'Microsoft', desc: 'Official Microsoft Account portal.', icon: 'fa-building' },
-    { id: 'azure', name: 'Azure', desc: 'Build, deploy, and manage cloud applications.', icon: 'fa-cloud' },
-    { id: 'imaginecup', name: 'Imagine Cup', desc: 'Global student innovation competition.', icon: 'fa-trophy' },
-    { id: 'fabric-blog', name: 'Fabric Blog', desc: 'Latest updates from Microsoft Fabric.', icon: 'fa-newspaper' },
-    { id: 'learn', name: 'Microsoft Learn', desc: 'Free learning paths and certifications.', icon: 'fa-graduation-cap' },
-    { id: 'learn-copilot', name: 'Learn Copilot', desc: 'Master AI productivity with Copilot.', icon: 'fa-robot' },
-    { id: 'fabric-community', name: 'Fabric Community', desc: 'Join discussions and forums.', icon: 'fa-users' },
-    { id: 'cloud-blog', name: 'Microsoft Cloud Blog', desc: 'Insights on cloud technology.', icon: 'fa-globe' },
-    { id: 'microsoft-fabric', name: 'Microsoft Fabric', desc: 'Unified data analytics platform.', icon: 'fa-database' },
-    { id: 'startups', name: 'Microsoft for Startups', desc: 'Resources and support for startups.', icon: 'fa-rocket' },
-    { id: 'developer', name: 'Developer Portal', desc: 'Tools and resources for developers.', icon: 'fa-code' },
-    { id: 'devblogs', name: 'Dev Blogs', desc: 'Official Microsoft developer blogs.', icon: 'fa-blog' },
-    { id: 'dotnet', name: '.NET Platform', desc: 'Build modern applications with .NET.', icon: 'fa-layer-group' },
-    { id: 'mvp', name: 'MVP Program', desc: 'Community leader recognition program.', icon: 'fa-star' },
-    { id: 'events', name: 'Microsoft Events', desc: 'Upcoming Microsoft tech events.', icon: 'fa-calendar' },
-    { id: 'reactor', name: 'Microsoft Reactor', desc: 'Developer community events and workshops.', icon: 'fa-bolt' },
-    { id: 'foundershub', name: 'Founders Hub', desc: 'Startup benefits and Azure credits.', icon: 'fa-lightbulb' },
-    { id: 'techcommunity', name: 'Tech Community', desc: 'Collaborate with Microsoft professionals.', icon: 'fa-comments' },
-    { id: 'vscode', name: 'Visual Studio Code', desc: 'Lightweight powerful code editor.', icon: 'fa-laptop-code' }
-];
+const ICON_LABELS = Object.freeze({
+    article: "NEWS",
+    automation: "↻",
+    blocks: "▦",
+    calendar: "31",
+    chart: "▥",
+    cloud: "☁",
+    code: "</>",
+    community: "●●",
+    data: "DB",
+    learn: "▶",
+    rocket: "↗",
+    spark: "AI",
+    student: "EDU",
+    trophy: "★",
+    web: "WWW"
+});
 
+const state = {
+    categories: [],
+    resources: [],
+    contributorId: ""
+};
 
-// ---------- LOAD SERVICES ----------
-async function loadHub() {
-    try {
-        const res = await fetch("links.json");
+function buildContributorUrl(resourceUrl, contributorId) {
+    if (!/^studentamb_\d+$/.test(contributorId)) {
+        throw new Error("Contributor ID must use the studentamb_###### format.");
+    }
 
-        if (!res.ok) throw new Error("links.json not found");
+    const url = new URL(resourceUrl);
 
-        const links = await res.json();
-        const grid = document.getElementById("servicesGrid");
+    if (url.protocol !== "https:") {
+        throw new Error(`Resource URL must use HTTPS: ${resourceUrl}`);
+    }
 
-        if (!grid) return;
+    for (const key of [...url.searchParams.keys()]) {
+        if (key.toLowerCase() === "wt.mc_id") {
+            url.searchParams.delete(key);
+        }
+    }
 
-        grid.innerHTML = services.map(s => `
-            <div class="card" data-name="${s.name.toLowerCase()}">
-                <i class="fas ${s.icon} fa-2x"></i>
-                <h3>${s.name}</h3>
-                <p>${s.desc}</p>
-                <a href="${links[s.id] || '#'}"
-                   class="btn-ms"
-                   target="_blank"
-                   rel="noopener">
-                   Get Started
-                </a>
-            </div>
-        `).join("");
+    url.searchParams.append("wt.mc_id", contributorId);
+    return url.toString();
+}
 
-    } catch (err) {
-        console.error("Failed to load services:", err);
+function validateHubData(data) {
+    if (!data?.config?.contributorId || !Array.isArray(data.categories)) {
+        throw new Error("links.json is missing its configuration or categories.");
+    }
+
+    const categoryIds = new Set();
+    const resourceIds = new Set();
+
+    for (const category of data.categories) {
+        if (!category.id || !category.name || !Array.isArray(category.resources)) {
+            throw new Error("A category in links.json is incomplete.");
+        }
+
+        if (categoryIds.has(category.id)) {
+            throw new Error(`Duplicate category ID: ${category.id}`);
+        }
+        categoryIds.add(category.id);
+
+        for (const resource of category.resources) {
+            if (!resource.id || !resource.name || !resource.description || !resource.url) {
+                throw new Error(`An item in ${category.name} is incomplete.`);
+            }
+
+            if (resourceIds.has(resource.id)) {
+                throw new Error(`Duplicate resource ID: ${resource.id}`);
+            }
+            resourceIds.add(resource.id);
+
+            buildContributorUrl(resource.url, data.config.contributorId);
+        }
     }
 }
 
+function createResourceCard(resource, category) {
+    const card = document.createElement("article");
+    card.className = "resource-card";
+    card.dataset.resourceId = resource.id;
 
-// ---------- SEARCH ----------
-const searchInput = document.getElementById("search");
+    const icon = document.createElement("span");
+    icon.className = "card-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = ICON_LABELS[resource.icon] || "MS";
 
-if (searchInput) {
-    searchInput.addEventListener("input", e => {
-        const val = e.target.value.toLowerCase();
+    const heading = document.createElement("h4");
+    heading.textContent = resource.name;
 
-        document.querySelectorAll(".card").forEach(card => {
-            card.style.display = card.dataset.name.includes(val)
-                ? "block"
-                : "none";
-        });
+    const description = document.createElement("p");
+    description.textContent = resource.description;
+
+    const link = document.createElement("a");
+    link.className = "btn-ms";
+    link.href = buildContributorUrl(resource.url, state.contributorId);
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Open Resource";
+    link.setAttribute("aria-label", `Open ${resource.name} in a new tab`);
+
+    card.append(icon, heading, description, link);
+
+    state.resources.push({
+        categoryId: category.id,
+        element: card,
+        searchText: `${resource.name} ${resource.description} ${category.name} ${category.description}`.toLocaleLowerCase()
     });
+
+    return card;
 }
 
+function createCategorySection(category) {
+    const section = document.createElement("section");
+    section.className = "resource-category";
+    section.id = `category-${category.id}`;
+    section.setAttribute("aria-labelledby", `category-${category.id}-title`);
 
-// Dark mode toggling removed — site forces dark theme via HTML attribute
+    const header = document.createElement("div");
+    header.className = "category-header";
 
+    const heading = document.createElement("h3");
+    heading.id = `category-${category.id}-title`;
+    heading.textContent = category.name;
 
-// ---------- INIT ----------
+    const description = document.createElement("p");
+    description.textContent = category.description;
+
+    const grid = document.createElement("div");
+    grid.className = "services-grid";
+
+    category.resources.forEach(resource => {
+        grid.append(createResourceCard(resource, category));
+    });
+
+    header.append(heading, description);
+    section.append(header, grid);
+    return section;
+}
+
+function updateSearchResults(query) {
+    const normalizedQuery = query.trim().toLocaleLowerCase();
+    const matchesByCategory = new Map();
+    let visibleCount = 0;
+
+    state.resources.forEach(resource => {
+        const isMatch = !normalizedQuery || resource.searchText.includes(normalizedQuery);
+        resource.element.hidden = !isMatch;
+
+        if (isMatch) {
+            visibleCount += 1;
+            matchesByCategory.set(
+                resource.categoryId,
+                (matchesByCategory.get(resource.categoryId) || 0) + 1
+            );
+        }
+    });
+
+    state.categories.forEach(category => {
+        const hasMatches = matchesByCategory.has(category.id);
+        category.element.hidden = !hasMatches;
+
+    });
+
+    const total = state.resources.length;
+    const summary = document.getElementById("result-summary");
+    summary.textContent = normalizedQuery
+        ? `Showing ${visibleCount} of ${total} resources`
+        : `${total} resources in ${state.categories.length} categories`;
+
+    document.getElementById("empty-state").hidden = visibleCount !== 0;
+}
+
+function renderLoadError(error) {
+    console.error("Failed to load resources:", error);
+
+    const categories = document.getElementById("categories");
+    const message = document.createElement("div");
+    message.className = "load-error";
+
+    const heading = document.createElement("h2");
+    heading.textContent = "Resources could not be loaded";
+
+    const guidance = document.createElement("p");
+    guidance.textContent = "Please refresh the page and try again.";
+
+    message.append(heading, guidance);
+    categories.replaceChildren(message);
+    categories.setAttribute("aria-busy", "false");
+    document.getElementById("result-summary").textContent = "Resources unavailable";
+}
+
+async function loadHub() {
+    try {
+        const response = await fetch("links.json");
+        if (!response.ok) {
+            throw new Error(`links.json returned ${response.status}`);
+        }
+
+        const data = await response.json();
+        validateHubData(data);
+
+        state.contributorId = data.config.contributorId;
+        const container = document.getElementById("categories");
+        const fragment = document.createDocumentFragment();
+
+        data.categories.forEach(category => {
+            const element = createCategorySection(category);
+            state.categories.push({ id: category.id, element });
+            fragment.append(element);
+        });
+
+        container.replaceChildren(fragment);
+        container.setAttribute("aria-busy", "false");
+        updateSearchResults("");
+
+        document.getElementById("search").addEventListener("input", event => {
+            updateSearchResults(event.target.value);
+        });
+    } catch (error) {
+        renderLoadError(error);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", loadHub);

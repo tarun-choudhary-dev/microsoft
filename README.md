@@ -1,70 +1,42 @@
-# 🌐 Microsoft Ambassador Helper
+# Microsoft Student Resources
 
-> A simple project created to make it easier to navigate and complete tasks related to the Microsoft Ambassador program.
+An independent, student-created directory of useful Microsoft learning, cloud, developer, AI, data, startup, low-code, and community resources.
 
----
+The site is maintained by Tarun Choudhary and is not an official Microsoft website or an endorsement by Microsoft.
 
-## 📌 Overview
+## Community Influencer links
 
-This project is a personal effort to organize and simplify access to useful resources for the Microsoft Ambassador journey.
+The resource list follows the eligible URL categories supplied for the Microsoft Student Ambassadors Community Influencer path:
 
-It mainly contains referral links and helpful navigation paths that can save time while working through the program.
+- Developer Interests and Skills
+- Startups Interests and Skills
+- Copilot Interests and Skills
+- Data Science Interests and Skills
+- Low Code Interests and Skills
+- General Skilling and Professional Interests
 
----
+Microsoft Learn Plans are intentionally excluded. Preferred Visitors are a program engagement measure, not a raw click count; the hub is intended to help people discover genuinely useful resources and does not encourage spam or artificial activity.
 
-## ✨ Features
+## Update the Contributor ID
 
-* 🔗 Quick access to important Microsoft Ambassador links
-* ⚡ Simplified navigation for tasks and resources
-* 📂 Organized structure for easy use
-* 🧠 Built as a personal productivity tool
+The Contributor ID is stored once as `config.contributorId` in [`links.json`](links.json). Change that single value when needed. `main.js` builds each referral URL at runtime, preserves legitimate query parameters, and replaces any existing `wt.mc_id` value instead of duplicating it.
 
----
+## Run locally
 
-## ⚠️ Disclaimer
+Because the resource data is loaded with `fetch`, serve the directory through a local HTTP server instead of opening `index.html` directly. For example:
 
-This is **NOT an official Microsoft website or tool**.
+```powershell
+python -m http.server 8000
+```
 
-* ❌ Not affiliated with Microsoft
-* ❌ Not endorsed by Microsoft
-* ✅ Created independently for personal use and experimentation
+Then open `http://localhost:8000`.
 
----
+## Project structure
 
-## 🎯 Purpose
+- `index.html` — page structure and accessible content
+- `style.css` — responsive dark Microsoft-inspired styling
+- `main.js` — resource rendering, search, validation, and referral URL handling
+- `links.json` — Contributor ID, categories, and resource destinations
+- `favicon.png` — site icon
 
-The goal of this project is to:
-
-* Reduce time spent searching for resources
-* Keep all important links in one place
-* Experiment with building a simple utility project
-
----
-
-## 🚀 Usage
-
-Simply open the project and use the provided links to navigate through Microsoft Ambassador resources.
-
----
-
-## 🛠️ Tech Stack
-
-* HTML / CSS / JavaScript /json
-
----
-
-## 🤝 Contributing
-
-This is a personal project, but suggestions and improvements are welcome.
-
----
-
-## 👤 Author
-
-* GitHub: tarun
-
----
-
-## 💡 Note
-
-This project is purely for learning and convenience purposes.
+The project is static HTML, CSS, and JavaScript with no framework, analytics, database, or backend.
